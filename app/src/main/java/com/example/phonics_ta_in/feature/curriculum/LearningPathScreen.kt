@@ -140,48 +140,6 @@ fun LearningPathScreen(
             verticalArrangement = Arrangement.spacedBy(12.dp),
             modifier = Modifier.fillMaxSize()
         ) {
-            // Read-Aloud Practice
-            item {
-                PathCard(
-                    title = "கதை வாசித்தல்",
-                    subtitle = "Read Aloud with Letter Correction",
-                    icon = "🗣️",
-                    cardColor = Color(0xFFEADDFF),
-                    iconBackground = Color(0xFF21005D),
-                    playTint = Color(0xFF6750A4),
-                    playDescription = "Start Read Aloud",
-                    onClick = onStartReadAloud
-                )
-            }
-
-            // Read your own pasted text
-            item {
-                PathCard(
-                    title = "உரை வாசிப்பு",
-                    subtitle = "Paste your own text and read along",
-                    icon = "📝",
-                    cardColor = Color(0xFFFFE8D6),
-                    iconBackground = Color(0xFFBF360C),
-                    playTint = Color(0xFFBF360C),
-                    playDescription = "Start reading your own text",
-                    onClick = onStartCustomReader
-                )
-            }
-
-            // Word Vocabulary Practice
-            item {
-                PathCard(
-                    title = "வார்த்தை உச்சரிப்பு",
-                    subtitle = "Full Word Vocabulary Speech",
-                    icon = "📖",
-                    cardColor = Color(0xFFE3F2FD),
-                    iconBackground = Color(0xFF1565C0),
-                    playTint = Color(0xFF1565C0),
-                    playDescription = "Start Vocabulary Speech",
-                    onClick = onStartVocabularySpeech
-                )
-            }
-
             // Vowels page: 12 uyir + ஃ
             item {
                 PathCard(
@@ -207,6 +165,48 @@ fun LearningPathScreen(
                     playTint = Color(0xFF0D3B66),
                     playDescription = "Open consonants",
                     onClick = onOpenConsonants
+                )
+            }
+
+            // Word Vocabulary Practice
+            item {
+                PathCard(
+                    title = "வார்த்தை உச்சரிப்பு",
+                    subtitle = "Everyday Vocabulary Hub & Speech",
+                    icon = "📖",
+                    cardColor = Color(0xFFE3F2FD),
+                    iconBackground = Color(0xFF1565C0),
+                    playTint = Color(0xFF1565C0),
+                    playDescription = "Start Vocabulary Speech",
+                    onClick = onStartVocabularySpeech
+                )
+            }
+
+            // Read-Aloud Stories
+            item {
+                PathCard(
+                    title = "கதை வாசித்தல்",
+                    subtitle = "Grade 1-3 Stories with Read-Along",
+                    icon = "🗣️",
+                    cardColor = Color(0xFFEADDFF),
+                    iconBackground = Color(0xFF21005D),
+                    playTint = Color(0xFF6750A4),
+                    playDescription = "Start Stories Read Aloud",
+                    onClick = onStartReadAloud
+                )
+            }
+
+            // Read your own pasted text
+            item {
+                PathCard(
+                    title = "உரை வாசிப்பு",
+                    subtitle = "Paste your own text and read along",
+                    icon = "📝",
+                    cardColor = Color(0xFFFFE8D6),
+                    iconBackground = Color(0xFFBF360C),
+                    playTint = Color(0xFFBF360C),
+                    playDescription = "Start reading your own text",
+                    onClick = onStartCustomReader
                 )
             }
         }
