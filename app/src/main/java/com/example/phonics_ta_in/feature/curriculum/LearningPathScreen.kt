@@ -21,7 +21,6 @@ import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -35,13 +34,18 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun LearningPathScreen(
-    currentXp: Int,
+    currentStars: Int,
     currentStreak: Int,
+    vowelsCompleted: Boolean = false,
+    consonantsCompleted: Boolean = false,
     onOpenVowels: () -> Unit,
     onOpenConsonants: () -> Unit,
     onStartReadAloud: () -> Unit,
     onStartCustomReader: () -> Unit,
     onStartVocabularySpeech: () -> Unit,
+    onStartTestKnowledge: () -> Unit,
+    onOpenParentDashboard: () -> Unit,
+    onOpenLicenses: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -88,43 +92,14 @@ fun LearningPathScreen(
                     modifier = Modifier.padding(horizontal = 14.dp, vertical = 6.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text("⚡", fontSize = 18.sp)
+                    Text("⭐", fontSize = 18.sp)
                     Spacer(modifier = Modifier.width(6.dp))
-                    Text("$currentXp XP", fontWeight = FontWeight.Bold, color = Color(0xFF21005D))
+                    Text("$currentStars", fontWeight = FontWeight.Bold, color = Color(0xFF21005D))
                 }
             }
         }
 
         Spacer(modifier = Modifier.height(16.dp))
-
-        // Daily Goal Card
-        Card(
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(20.dp),
-            colors = CardDefaults.cardColors(containerColor = Color.White),
-            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
-        ) {
-            Column(modifier = Modifier.padding(16.dp)) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text("Daily Goal", fontWeight = FontWeight.Medium, color = Color(0xFF49454F))
-                    Text("8 / 10 min", fontWeight = FontWeight.Bold, color = Color(0xFF6750A4))
-                }
-                Spacer(modifier = Modifier.height(8.dp))
-                LinearProgressIndicator(
-                    progress = { 0.8f },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(8.dp),
-                    color = Color(0xFF6750A4),
-                    trackColor = Color(0xFFE7E0EC)
-                )
-            }
-        }
-
-        Spacer(modifier = Modifier.height(24.dp))
 
         Text(
             text = "Learning Path",
@@ -150,6 +125,7 @@ fun LearningPathScreen(
                     iconBackground = Color(0xFF6750A4),
                     playTint = Color(0xFF6750A4),
                     playDescription = "Open vowels",
+                    isCompleted = vowelsCompleted,
                     onClick = onOpenVowels
                 )
             }
@@ -164,6 +140,7 @@ fun LearningPathScreen(
                     iconBackground = Color(0xFF0D3B66),
                     playTint = Color(0xFF0D3B66),
                     playDescription = "Open consonants",
+                    isCompleted = consonantsCompleted,
                     onClick = onOpenConsonants
                 )
             }
@@ -196,6 +173,20 @@ fun LearningPathScreen(
                 )
             }
 
+            // Test Your Knowledge Card (Speech + Meaning across Levels 1 to 7+ Letter Words)
+            item {
+                PathCard(
+                    title = "அறிவு சோதனை",
+                    subtitle = "Test Speech & Meaning (Levels 1-7+)",
+                    icon = "🎯",
+                    cardColor = Color(0xFFF3E5F5),
+                    iconBackground = Color(0xFF7B1FA2),
+                    playTint = Color(0xFF7B1FA2),
+                    playDescription = "Start Knowledge Test",
+                    onClick = onStartTestKnowledge
+                )
+            }
+
             // Read your own pasted text
             item {
                 PathCard(
@@ -207,6 +198,34 @@ fun LearningPathScreen(
                     playTint = Color(0xFFBF360C),
                     playDescription = "Start reading your own text",
                     onClick = onStartCustomReader
+                )
+            }
+
+            // Parent / Teacher Analytics Dashboard
+            item {
+                PathCard(
+                    title = "பெற்றோர் பகுதி",
+                    subtitle = "Analytics, PIN Gate & Progress Heat Map",
+                    icon = "📊",
+                    cardColor = Color(0xFFE8F5E9),
+                    iconBackground = Color(0xFF2E7D32),
+                    playTint = Color(0xFF2E7D32),
+                    playDescription = "Open Parent Dashboard",
+                    onClick = onOpenParentDashboard
+                )
+            }
+
+            // Licenses & credits (background music)
+            item {
+                PathCard(
+                    title = "உரிமங்கள்",
+                    subtitle = "Licenses & music credits",
+                    icon = "©",
+                    cardColor = Color(0xFFECEFF1),
+                    iconBackground = Color(0xFF455A64),
+                    playTint = Color(0xFF455A64),
+                    playDescription = "Open licenses",
+                    onClick = onOpenLicenses
                 )
             }
         }
@@ -222,7 +241,8 @@ private fun PathCard(
     iconBackground: Color,
     playTint: Color,
     playDescription: String,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    isCompleted: Boolean = false
 ) {
     Card(
         modifier = Modifier
@@ -261,12 +281,26 @@ private fun PathCard(
                 Spacer(modifier = Modifier.width(16.dp))
 
                 Column {
-                    Text(
-                        text = title,
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color(0xFF1D1B20)
-                    )
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text(
+                            text = title,
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color(0xFF1D1B20)
+                        )
+                        if (isCompleted) {
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Surface(
+                                modifier = Modifier.size(22.dp),
+                                shape = CircleShape,
+                                color = Color(0xFF2E7D32)
+                            ) {
+                                Box(contentAlignment = Alignment.Center) {
+                                    Text("✓", color = Color.White, fontSize = 13.sp, fontWeight = FontWeight.Bold)
+                                }
+                            }
+                        }
+                    }
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
                         text = subtitle,

@@ -3,6 +3,7 @@ package com.example.phonics_ta_in.feature.curriculum
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -10,11 +11,13 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -22,6 +25,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -47,6 +51,7 @@ private const val GRID_COLUMNS = 4
 fun VowelsScreen(
     onBack: () -> Unit,
     onOpenUnit: (unitId: String) -> Unit,
+    genuineCompletedUnitIds: Set<String> = emptySet(),
     modifier: Modifier = Modifier
 ) {
     GridPage(
@@ -56,7 +61,11 @@ fun VowelsScreen(
         modifier = modifier
     ) {
         items(CurriculumRepository.VOWEL_UNITS, key = { it.id }) { unit ->
-            UnitTile(unit = unit, onClick = { onOpenUnit(unit.id) })
+            UnitTile(
+                unit = unit,
+                onClick = { onOpenUnit(unit.id) },
+                isGenuinelyCompleted = genuineCompletedUnitIds.contains(unit.id)
+            )
         }
         item(span = { GridItemSpan(maxLineSpan) }) {
             SectionLabel(titleTamil = "ஆய்த எழுத்து", subtitle = "Aytham - special letter")
@@ -64,7 +73,8 @@ fun VowelsScreen(
         item(key = CurriculumRepository.UNIT_AYTHAM.id) {
             UnitTile(
                 unit = CurriculumRepository.UNIT_AYTHAM,
-                onClick = { onOpenUnit(CurriculumRepository.UNIT_AYTHAM.id) }
+                onClick = { onOpenUnit(CurriculumRepository.UNIT_AYTHAM.id) },
+                isGenuinelyCompleted = genuineCompletedUnitIds.contains(CurriculumRepository.UNIT_AYTHAM.id)
             )
         }
     }
@@ -78,6 +88,7 @@ fun VowelsScreen(
 fun ConsonantsScreen(
     onBack: () -> Unit,
     onOpenFamily: (familyIndex: Int) -> Unit,
+    completedFamilyIndexes: Set<Int> = emptySet(),
     modifier: Modifier = Modifier
 ) {
     GridPage(
@@ -87,7 +98,11 @@ fun ConsonantsScreen(
         modifier = modifier
     ) {
         items(CurriculumRepository.CONSONANT_FAMILIES, key = { it.index }) { family ->
-            FamilyTile(family = family, onClick = { onOpenFamily(family.index) })
+            FamilyTile(
+                family = family,
+                onClick = { onOpenFamily(family.index) },
+                isCompleted = family.index in completedFamilyIndexes
+            )
         }
     }
 }
@@ -101,6 +116,7 @@ fun ConsonantFamilyScreen(
     familyIndex: Int,
     onBack: () -> Unit,
     onOpenUnit: (unitId: String) -> Unit,
+    genuineCompletedUnitIds: Set<String> = emptySet(),
     modifier: Modifier = Modifier
 ) {
     val family = CurriculumRepository.getFamily(familyIndex)
@@ -120,13 +136,21 @@ fun ConsonantFamilyScreen(
             SectionLabel(titleTamil = "மெய்", subtitle = "Consonant with pulli")
         }
         item(key = family.mei.id) {
-            UnitTile(unit = family.mei, onClick = { onOpenUnit(family.mei.id) })
+            UnitTile(
+                unit = family.mei,
+                onClick = { onOpenUnit(family.mei.id) },
+                isGenuinelyCompleted = genuineCompletedUnitIds.contains(family.mei.id)
+            )
         }
         item(span = { GridItemSpan(maxLineSpan) }) {
             SectionLabel(titleTamil = "உயிர்மெய்", subtitle = "Consonant + each vowel (${family.uyirmei.size})")
         }
         items(family.uyirmei, key = { it.id }) { unit ->
-            UnitTile(unit = unit, onClick = { onOpenUnit(unit.id) })
+            UnitTile(
+                unit = unit,
+                onClick = { onOpenUnit(unit.id) },
+                isGenuinelyCompleted = genuineCompletedUnitIds.contains(unit.id)
+            )
         }
     }
 }
@@ -203,6 +227,7 @@ private fun SectionLabel(titleTamil: String, subtitle: String) {
 private fun UnitTile(
     unit: PhonicsUnit,
     onClick: () -> Unit,
+    isGenuinelyCompleted: Boolean = false,
     modifier: Modifier = Modifier
 ) {
     val (background, letterColor) = when (unit.kind) {
@@ -216,17 +241,38 @@ private fun UnitTile(
         onClick = onClick,
         modifier = modifier
     ) {
-        Text(
-            text = unit.text,
-            fontSize = 28.sp,
-            fontWeight = FontWeight.Bold,
-            color = letterColor
-        )
-        Text(
-            text = unit.phonicsSound,
-            fontSize = 11.sp,
-            color = Color(0xFF49454F)
-        )
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = unit.text,
+                    fontSize = 28.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = letterColor
+                )
+                Text(
+                    text = unit.phonicsSound,
+                    fontSize = 11.sp,
+                    color = Color(0xFF49454F)
+                )
+            }
+            if (isGenuinelyCompleted) {
+                Surface(
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(4.dp)
+                        .size(20.dp),
+                    shape = CircleShape,
+                    color = Color(0xFF2E7D32)
+                ) {
+                    Box(contentAlignment = Alignment.Center) {
+                        Text("✓", color = Color.White, fontSize = 11.sp, fontWeight = FontWeight.Bold)
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -235,6 +281,7 @@ private fun UnitTile(
 private fun FamilyTile(
     family: ConsonantFamily,
     onClick: () -> Unit,
+    isCompleted: Boolean = false,
     modifier: Modifier = Modifier
 ) {
     TileCard(
@@ -242,17 +289,39 @@ private fun FamilyTile(
         onClick = onClick,
         modifier = modifier
     ) {
-        Text(
-            text = family.mei.text,
-            fontSize = 28.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color(0xFF0D3B66)
-        )
-        Text(
-            text = "${family.mei.phonicsSound} · ${family.units.size}",
-            fontSize = 11.sp,
-            color = Color(0xFF49454F)
-        )
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = family.mei.text,
+                    fontSize = 28.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFF0D3B66)
+                )
+                Text(
+                    text = "${family.mei.phonicsSound} · ${family.units.size}",
+                    fontSize = 11.sp,
+                    color = Color(0xFF49454F)
+                )
+            }
+            // Every letter inside this consonant is finished
+            if (isCompleted) {
+                Surface(
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(4.dp)
+                        .size(20.dp),
+                    shape = CircleShape,
+                    color = Color(0xFF2E7D32)
+                ) {
+                    Box(contentAlignment = Alignment.Center) {
+                        Text("✓", color = Color.White, fontSize = 11.sp, fontWeight = FontWeight.Bold)
+                    }
+                }
+            }
+        }
     }
 }
 

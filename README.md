@@ -7,8 +7,8 @@
 ## 🌟 Key Feature Set
 
 ### 1. 📖 Comprehensive Tamil Phonics Curriculum (247 Letters)
-* **Vowels (`உயிர் எழுத்துகள்`)**: 12 pure vowels + ஃ (Aytham), each with interactive flashcards and audio pronunciation.
-* **Consonants (`மெய் எழுத்துகள்`)**: 18 consonant families, expanding into full combined consonant-vowel forms (`உயிர்மெய்`).
+* **Vowels / Sounds (`உயிர் எழுத்துகள் [Uyir Ezhuthugal]`)**: 12 pure vowels + ஃ (`ஆய்தம் [Aytham]`), each with interactive flashcards and audio pronunciation.
+* **Consonants / Sounds (`மெய் எழுத்துகள் [Mei Ezhuthugal]`)**: 18 consonant families, expanding into full combined consonant-vowel forms (`உயிர்மெய் [Uyirmei]`).
 * **Multi-Modal Interactive Lessons**: Every single letter in the Tamil alphabet includes a dedicated lesson containing:
   1. **Precursor Sound**: Listen to isolated reference sound.
   2. **Listening Test**: Hear sound -> pick the correct letter.
@@ -46,6 +46,32 @@ When a word is mispronounced (highlighted in yellow):
 ### 6. 📝 Custom Text Reader
 * Paste or type any Tamil text (story, poem, or homework) into the app and practise reading it aloud with the exact same hands-free tracking and progressive assistance engine.
 * State persistence ensures pasted text and reading progress are never lost when jumping into practice lessons.
+
+### 7. 🎯 Test Your Knowledge (Continuous Random Word Quiz)
+* **Word Difficulty Progression (Levels 1–7+)**: Dynamically draws vocabulary words from the Tamil dictionary categorized by grapheme length (Level 1: 1-letter words to Level 7+: 7+ letter words).
+* **Simultaneous Dual Testing**: Combines on-device speech pronunciation recognition (`SpeechRecognizerEngine`) and multiple-choice meaning comprehension on the same active card view.
+* **Fresh Test Generation**: Generates a new random sequence of words across all levels every time a test session starts or restarts.
+
+---
+
+## 📋 Implementation Progress & TODO Roadmap
+
+### Completed Features (`[x]`)
+- `[x]` **Tamil Phonics Curriculum**: All 247 letters (உயிர் [Uyir - Vowels], மெய் [Mei - Consonants], உயிர்மெய் [Uyirmei - Combined Forms], ஆய்தம் [Aytham - Special Letter]) with flashcards, audio, tracing, and sound matching.
+- `[x]` **Grapheme & Syllable Engine**: Unicode Tamil grapheme segmentation (`TamilTextSegmenter`), syllable splitting (`TamilSyllableSegmenter`), and transliteration (`TamilTransliteration`).
+- `[x]` **Hands-Free Read-Along Engine**: Always-on mic streaming, real-time word highlighting, paragraph view, and zero chime interference.
+- `[x]` **Progressive Word Assistance**: Multi-level tap assistance (grapheme split, syllable split, whole word audio) and direct lesson practice jumps.
+- `[x]` **Pre-Reading Review Grid**: Distinct letter extraction, step-by-step sound test, and interactive touch grid.
+- `[x]` **Stories & Custom Reader**: Grade 1–3 story library and custom text reading with state persistence.
+- `[x]` **Test Your Knowledge**: Continuous random word quiz across levels 1 to 7+ with simultaneous speech + meaning testing.
+- `[x]` **Parent / Teacher Dashboard (`feature:parent`)**: PIN security gate (NumPad), visual metrics (18/247 letters mastered, daily time chart, streak), weak sounds heat map (247-letter grid), priority practice jumps ("Practice 🎯"), daily goal settings, and progress report export.
+- `[x]` **Unit Test Suite**: 73 automated unit tests covering segmentation, dictionary classification, tracker logic, analytics models, and sound matching.
+
+### Pending Features (`[ ]`)
+- `[ ]` **Child Profile & Onboarding Flow**: First-run setup, language toggle (Tamil UI / English helper text), and multi-profile selection.
+- `[ ]` **Reward Shop & Sticker Book**: Non-monetary rewards, collectible stickers, and avatar customizations.
+- `[ ]` **Adaptive Spaced Repetition**: Database tracking for weak sounds and automated resurfacing in upcoming practice sets.
+- `[ ]` **Tablet Multi-Pane Layouts**: Responsive navigation rail and two-pane side-by-side reading layouts.
 
 ---
 

@@ -43,6 +43,7 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -64,6 +65,7 @@ import com.example.phonics_ta_in.core.curriculum.CurriculumRepository
 import com.example.phonics_ta_in.core.curriculum.ExerciseType
 import com.example.phonics_ta_in.core.curriculum.LessonExercise
 import com.example.phonics_ta_in.core.curriculum.UnitKind
+import com.example.phonics_ta_in.core.progress.ProgressLogic
 import com.example.phonics_ta_in.core.speech.SpeechRecognizerEngine
 import com.example.phonics_ta_in.core.speech.AcousticSoundMatcher
 import com.example.phonics_ta_in.core.speech.IsolatedSoundRecorder
@@ -77,7 +79,12 @@ import com.example.phonics_ta_in.feature.tracing.TracingCanvas
 fun LessonScreen(
     unitId: String,
     onCloseLesson: () -> Unit,
-    onLessonCompleted: (xpEarned: Int, starsEarned: Int) -> Unit,
+    /** Called once, as soon as the last exercise is finished, so the result is saved even if the child leaves from the menu. */
+    onLessonCompleted: (starsEarned: Int, usedSelfCheck: Boolean) -> Unit,
+    /** null when this is the last lesson of its category. */
+    onNextLesson: (() -> Unit)? = null,
+    /** null when the category has no other lesson. */
+    onRandomLesson: (() -> Unit)? = null,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -93,14 +100,18 @@ fun LessonScreen(
     var currentIndex by remember { mutableIntStateOf(0) }
     var selectedOptionId by remember { mutableStateOf<String?>(null) }
     var isCorrectFeedback by remember { mutableStateOf<Boolean?>(null) }
-    var totalXp by remember { mutableIntStateOf(0) }
+    var wrongAnswers by remember { mutableIntStateOf(0) }
+    var usedSelfCheckInLesson by remember { mutableStateOf(false) }
 
     if (exercises.isEmpty() || currentIndex >= exercises.size) {
         // Lesson Completion Screen
+        val earnedStars = ProgressLogic.starsFor(wrongAnswers, usedSelfCheckInLesson)
+        LaunchedEffect(Unit) { onLessonCompleted(earnedStars, usedSelfCheckInLesson) }
         LessonCompletionView(
-            xpGained = totalXp + 20,
-            starsGained = 3,
-            onContinue = { onLessonCompleted(totalXp + 20, 3) }
+            starsGained = earnedStars,
+            onNext = onNextLesson,
+            onRandom = onRandomLesson,
+            onBackToPath = onCloseLesson
         )
         return
     }
@@ -136,7 +147,11 @@ fun LessonScreen(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(Icons.Default.Star, contentDescription = "Stars", tint = Color(0xFFFFB703))
                 Spacer(modifier = Modifier.width(4.dp))
-                Text("3", fontWeight = FontWeight.Bold, fontSize = 16.sp)
+                Text(
+                    "${ProgressLogic.starsFor(wrongAnswers, usedSelfCheckInLesson)}",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp
+                )
             }
         }
 
@@ -175,7 +190,8 @@ fun LessonScreen(
                             isCorrectFeedback = option.isCorrect
                             if (option.isCorrect) {
                                 audioEngine.speakTamilText(option.text)
-                                totalXp += 10
+                            } else {
+                                wrongAnswers++
                             }
                         }
                     )
@@ -188,7 +204,6 @@ fun LessonScreen(
                         onTraceCompleted = {
                             audioEngine.speakTamilText(currentExercise.targetUnit.text)
                             isCorrectFeedback = true
-                            totalXp += 15
                         }
                     )
                 }
@@ -200,9 +215,9 @@ fun LessonScreen(
                         SayLetterView(
                             exercise = currentExercise,
                             audioEngine = audioEngine,
-                            onSpeechPass = {
+                            onSpeechPass = { isSelfCheck ->
+                                if (isSelfCheck) usedSelfCheckInLesson = true
                                 isCorrectFeedback = true
-                                totalXp += 15
                             }
                         )
                     }
@@ -215,7 +230,6 @@ fun LessonScreen(
                             val letter = currentExercise.singleLetterWord?.letter ?: currentExercise.targetUnit.text
                             audioEngine.speakTamilText(letter)
                             isCorrectFeedback = true
-                            totalXp += 10
                         }
                     )
                 }
@@ -224,9 +238,9 @@ fun LessonScreen(
                     VocabularyWordSpeechView(
                         exercise = currentExercise,
                         audioEngine = audioEngine,
-                        onSpeechPass = {
+                        onSpeechPass = { isSelfCheck ->
+                            if (isSelfCheck) usedSelfCheckInLesson = true
                             isCorrectFeedback = true
-                            totalXp += 20
                         }
                     )
                 }
@@ -418,9 +432,10 @@ fun ListenAndTapView(
 
 @Composable
 fun LessonCompletionView(
-    xpGained: Int,
     starsGained: Int,
-    onContinue: () -> Unit
+    onNext: (() -> Unit)?,
+    onRandom: (() -> Unit)?,
+    onBackToPath: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -451,22 +466,51 @@ fun LessonCompletionView(
                     .padding(24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(text = "⭐ $starsGained Stars Earned!", fontSize = 22.sp, fontWeight = FontWeight.Bold)
+                Text(
+                    text = "⭐".repeat(starsGained) + "☆".repeat((3 - starsGained).coerceAtLeast(0)),
+                    fontSize = 40.sp
+                )
                 Spacer(modifier = Modifier.height(8.dp))
-                Text(text = "⚡ +$xpGained XP", fontSize = 20.sp, color = Color(0xFF21005D))
+                Text(
+                    text = "$starsGained ${if (starsGained == 1) "Star" else "Stars"} Earned!",
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.Bold
+                )
             }
         }
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        Button(
-            onClick = onContinue,
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6750A4)),
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(52.dp)
+        // Next / Random stay inside the same category (the page the lesson was opened from)
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            Text("Back to Path", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+            OutlinedButton(
+                onClick = { onRandom?.invoke() },
+                enabled = onRandom != null,
+                modifier = Modifier
+                    .weight(1f)
+                    .height(52.dp)
+            ) {
+                Text("🎲 Random", fontSize = 16.sp, fontWeight = FontWeight.Bold)
+            }
+            Button(
+                onClick = { onNext?.invoke() },
+                enabled = onNext != null,
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6750A4)),
+                modifier = Modifier
+                    .weight(1f)
+                    .height(52.dp)
+            ) {
+                Text("Next ▶", fontSize = 16.sp, fontWeight = FontWeight.Bold)
+            }
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        TextButton(onClick = onBackToPath) {
+            Text("Back to Path", fontSize = 16.sp)
         }
     }
 }
@@ -631,7 +675,7 @@ fun SingleLetterMeaningView(
 fun VocabularyWordSpeechView(
     exercise: LessonExercise,
     audioEngine: AppAudioEngine,
-    onSpeechPass: () -> Unit
+    onSpeechPass: (Boolean) -> Unit
 ) {
     val context = LocalContext.current
     val word = exercise.targetWord ?: exercise.targetUnit.startingWords.firstOrNull()
@@ -659,7 +703,7 @@ fun VocabularyWordSpeechView(
                         isPassed = true
                         speechStatusText = "Great job! Recognized: '$targetWordText'"
                         audioEngine.speakTamilText("சரியாக சொன்னாய்!")
-                        onSpeechPass()
+                        onSpeechPass(false)
                     } else {
                         speechStatusText = "Heard '${speechState.topMatch}'. Try again!"
                     }
@@ -818,7 +862,7 @@ fun VocabularyWordSpeechView(
                 isPassed = true
                 speechStatusText = "Marked as spoken correctly!"
                 audioEngine.speakTamilText(targetWordText)
-                onSpeechPass()
+                onSpeechPass(true)
             }
         ) {
             Text("I said it! (Self Check)", fontSize = 16.sp)
@@ -830,7 +874,7 @@ fun VocabularyWordSpeechView(
 fun SayLetterView(
     exercise: LessonExercise,
     audioEngine: AppAudioEngine,
-    onSpeechPass: () -> Unit
+    onSpeechPass: (Boolean) -> Unit
 ) {
     val context = LocalContext.current
     var isListening by remember { mutableStateOf(false) }
@@ -888,7 +932,7 @@ fun SayLetterView(
                             "Good! Heard: $heard — a word with this sound.\nNow try saying just '${exercise.targetUnit.phonicsSound}'."
                         }
                         audioEngine.speakTamilText("சரியாக சொன்னாய்!")
-                        onSpeechPass()
+                        onSpeechPass(false)
                     } else {
                         // Show top 3 candidates so we can diagnose what ASR returned
                         val topCandidates = speechState.candidates.take(3).joinToString(", ") { "'$it'" }
@@ -928,7 +972,7 @@ fun SayLetterView(
                 isPassed = true
                 speechStatusText = "Great job! Your sound matches ${unit.phonicsSound}"
                 audioEngine.speakTamilText("சரியாக சொன்னாய்!")
-                onSpeechPass()
+                onSpeechPass(false)
             }
             AcousticSoundMatcher.Verdict.NO_MATCH ->
                 startWordFallback("That didn't match ${unit.phonicsSound} yet.")
@@ -1118,7 +1162,7 @@ fun SayLetterView(
                 isPassed = true
                 speechStatusText = "Marked as spoken correctly!"
                 audioEngine.speakTamilText(exercise.targetUnit.text)
-                onSpeechPass()
+                onSpeechPass(true)
             }
         ) {
             Text("I said it! (Self Check)", fontSize = 16.sp)

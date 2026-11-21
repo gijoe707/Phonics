@@ -36,6 +36,29 @@ android {
     }
 }
 
+val copyDebugApk = tasks.register<Copy>("copyDebugApk") {
+    description = "Copies the built debug APK to the app/debug directory"
+    from(layout.buildDirectory.dir("outputs/apk/debug"))
+    include("*.apk")
+    into(layout.projectDirectory.dir("debug"))
+}
+
+val copyReleaseApk = tasks.register<Copy>("copyReleaseApk") {
+    description = "Copies the built release APK to the app/release directory"
+    from(layout.buildDirectory.dir("outputs/apk/release"))
+    include("*.apk")
+    into(layout.projectDirectory.dir("release"))
+}
+
+afterEvaluate {
+    tasks.named("assembleDebug") {
+        finalizedBy(copyDebugApk)
+    }
+    tasks.named("assembleRelease") {
+        finalizedBy(copyReleaseApk)
+    }
+}
+
 dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.activity.compose)
@@ -47,7 +70,6 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     testImplementation(libs.junit)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
