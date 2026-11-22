@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Telugu (te). DRAFT: needs native review. Native words: అచ్చులు (vowels), తోట (garden), మార్మోగు (to resound), అడవి (forest), కలయిక (joining), దీవి (island), అరుగు (porch), వాకిలి (yard). -->
+<resources>
+    <string name="land_vowels_name">అచ్చుల తోట</string>
+    <string name="land_vowels_tagline">మీ గొంతుతో నిద్రపోతున్న జంతువులను లేపండి</string>
+
+    <string name="land_consonants_name">మార్మోగే అడవి</string>
+    <string name="land_consonants_tagline">స్పష్టమైన శబ్దాలను తిరిగి పలకండి</string>
+
+    <string name="land_blending_name">కలయిక దీవి</string>
+    <string name="land_blending_tagline">హల్లు, అచ్చు కలపండి</string>
+
+    <string name="land_script_name">రాతల అరుగు</string>
+    <string name="land_script_tagline">వినండి, తాకండి, రాయండి</string>
+
+    <string name="land_home_name">Boli &amp; Moli ఆటల వాకిలి</string>
+    <string name="land_home_tagline">రోజువారీ పదాలు, వరుస రోజులు, స్టిక్కర్లు</string>
+</resources>

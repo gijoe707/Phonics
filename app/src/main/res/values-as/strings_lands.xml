@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Assamese (as). DRAFT, LOWER CONFIDENCE: needs native review. Everyday words: মাত (speech), বাগিচা (garden), সঁহাৰি (response/echo), জংঘল (forest), যোৰা (pairing), চোতাল (courtyard). -->
+<resources>
+    <string name="land_vowels_name">মাতৰ বাগিচা</string>
+    <string name="land_vowels_tagline">তোমাৰ মাতেৰে টোপনিত থকা জন্তুবোৰক সজাগ কৰা</string>
+
+    <string name="land_consonants_name">সঁহাৰিৰ জংঘল</string>
+    <string name="land_consonants_tagline">স্পষ্ট ধ্বনিবোৰ পুনৰ কোৱা</string>
+
+    <string name="land_blending_name">যোৰাৰ দ্বীপ</string>
+    <string name="land_blending_tagline">এটা ব্যঞ্জন আৰু এটা স্বৰ লগ লগোৱা</string>
+
+    <string name="land_script_name">লিখাৰ বাৰান্দা</string>
+    <string name="land_script_tagline">শুনা, চুবা, লিখা</string>
+
+    <string name="land_home_name">Boli &amp; Moli ৰ খেলৰ চোতাল</string>
+    <string name="land_home_tagline">দৈনিক শব্দ, ধাৰাবাহিক দিন আৰু ষ্টিকাৰ</string>
+</resources>

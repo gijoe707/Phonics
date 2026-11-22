@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Punjabi, Gurmukhi script (pa). DRAFT: needs native review. Everyday words: ਬਾਗ਼ (garden), ਗੂੰਜ (echo), ਮੇਲ (joining), ਟਾਪੂ (island), ਥੜ੍ਹਾ (raised platform), ਵਿਹੜਾ (courtyard). -->
+<resources>
+    <string name="land_vowels_name">ਆਵਾਜ਼ ਦਾ ਬਾਗ਼</string>
+    <string name="land_vowels_tagline">ਆਪਣੀ ਆਵਾਜ਼ ਨਾਲ ਸੁੱਤੇ ਜਾਨਵਰਾਂ ਨੂੰ ਜਗਾਓ</string>
+
+    <string name="land_consonants_name">ਗੂੰਜ ਦਾ ਜੰਗਲ</string>
+    <string name="land_consonants_tagline">ਸਾਫ਼ ਆਵਾਜ਼ਾਂ ਦੁਹਰਾਓ</string>
+
+    <string name="land_blending_name">ਮੇਲ ਦਾ ਟਾਪੂ</string>
+    <string name="land_blending_tagline">ਇੱਕ ਵਿਅੰਜਨ ਅਤੇ ਇੱਕ ਸੁਰ ਜੋੜੋ</string>
+
+    <string name="land_script_name">ਲਿਖਤ ਦਾ ਥੜ੍ਹਾ</string>
+    <string name="land_script_tagline">ਸੁਣੋ, ਛੂਹੋ, ਲਿਖੋ</string>
+
+    <string name="land_home_name">Boli &amp; Moli ਦਾ ਖੇਡ ਵਿਹੜਾ</string>
+    <string name="land_home_tagline">ਰੋਜ਼ ਦੇ ਸ਼ਬਦ, ਲਗਾਤਾਰ ਦਿਨ ਅਤੇ ਸਟਿੱਕਰ</string>
+</resources>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  BoliMoli learning lands: names and one-line descriptions, per UI language.
+
+  The five lands keep the same keys in every language, so the home map shows the names in the language the user
+  picked. Each language uses its own words and its own script:
+    - Dravidian languages (Tamil, Malayalam, Telugu, Kannada) use native words, no Sanskrit/Hindi loanwords.
+    - Hindi, Marathi, Bengali and Gujarati use the Sanskrit-rooted names (Swara / Dhwani / Akshara / Lipi) in their
+      own spelling. They are NOT copied between languages, even where the script is shared (Hindi and Marathi).
+    - Punjabi, Odia, Assamese and Urdu use everyday words of their own.
+  English is a neutral set of names.
+
+  "Boli & Moli" stays in Latin script in every language on purpose: transliterated into Tamil, "Boli" reads as
+  "போலி", which means "fake".
+
+  DRAFT: every translation needs review by a native speaker or teacher before release.
+  Roles: vowels = land 1, consonants = land 2, blending = land 3, script/tracing = land 4, home = hub.
+-->
+<resources>
+    <string name="land_vowels_name">Vowel Grove</string>
+    <string name="land_vowels_tagline">Wake the sleepy animals with your voice</string>
+
+    <string name="land_consonants_name">Echo Forest</string>
+    <string name="land_consonants_tagline">Say the clear sounds back</string>
+
+    <string name="land_blending_name">Joining Island</string>
+    <string name="land_blending_tagline">Join a consonant and a vowel</string>
+
+    <string name="land_script_name">Letter Porch</string>
+    <string name="land_script_tagline">Hear it, tap it, trace it</string>
+
+    <string name="land_home_name">Boli &amp; Moli’s Playground</string>
+    <string name="land_home_tagline">Everyday words, streaks and stickers</string>
+</resources>

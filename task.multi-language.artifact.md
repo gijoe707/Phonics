@@ -88,7 +88,7 @@ Today the Tamil assumptions live in names and code such as `TamilGrapheme`, `Tam
 - `[ ]` **Language picker** in onboarding and in the menu / settings, and a way to switch learning language per profile.
 - `[ ]` **Theme and icons:** keep one brand palette; optionally a small accent per language.
 - `[ ]` **Menu, home cards and titles** come from the language pack (native name + English).
-- `[ ]` **BoliMoli world names per language:** the four worlds (Swara Valley, Dhwani Jungle, Akshara Land, Lipi Lab) map to each language's own terms, e.g. Tamil Uyir / Mei / Uyirmei, Hindi Swara / Vyanjana / Akshara. Keep the world names in the language config so one map works for every language (see `task.artifact.md`, "BoliMoli Worlds").
+- `[x]` **BoliMoli world names per language:** done for 13 languages in `res/values*/strings_lands.xml` using each language's own words (e.g. Tamil Uyir Solai, Ethiroli Kaadu, Koodal Theevu, Ezhuthu Thinnai). The Sanskrit-rooted Swara / Dhwani / Akshara / Lipi names are used only in Hindi, Marathi, Bengali and Gujarati, each in its own spelling (never copied across languages that share a script). For a new language, add a `values-xx/strings_lands.xml` with the same ten keys and list it in `locales_config.xml` (see `task.artifact.md`, "BoliMoli Worlds").
 - `[ ]` **UI language independent of the learning language** (see section 1).
 
 ---

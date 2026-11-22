@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Odia (or). DRAFT, LOWER CONFIDENCE: needs native review. Everyday words: ବଗିଚା (garden), ଜଙ୍ଗଲ (forest), ଯୋଡ଼ା (joining), ପିଣ୍ଡା (veranda), ଅଗଣା (courtyard). Echo and vowel use the common Sanskrit-derived terms because no everyday alternative was confirmed. -->
+<resources>
+    <string name="land_vowels_name">ସ୍ୱର ବଗିଚା</string>
+    <string name="land_vowels_tagline">ତୁମ ସ୍ୱରରେ ଶୋଇଥିବା ପଶୁମାନଙ୍କୁ ଉଠାଅ</string>
+
+    <string name="land_consonants_name">ପ୍ରତିଧ୍ୱନି ଜଙ୍ଗଲ</string>
+    <string name="land_consonants_tagline">ସ୍ପଷ୍ଟ ଧ୍ୱନିଗୁଡ଼ିକୁ ପୁଣି କୁହ</string>
+
+    <string name="land_blending_name">ଯୋଡ଼ା ଦ୍ୱୀପ</string>
+    <string name="land_blending_tagline">ଗୋଟିଏ ବ୍ୟଞ୍ଜନ ଓ ଗୋଟିଏ ସ୍ୱର ଯୋଡ଼</string>
+
+    <string name="land_script_name">ଲେଖା ପିଣ୍ଡା</string>
+    <string name="land_script_tagline">ଶୁଣ, ଛୁଅଁ, ଲେଖ</string>
+
+    <string name="land_home_name">Boli &amp; Moli ଖେଳ ଅଗଣା</string>
+    <string name="land_home_tagline">ଦୈନିକ ଶବ୍ଦ, ଲଗାତାର ଦିନ ଓ ଷ୍ଟିକର୍</string>
+</resources>

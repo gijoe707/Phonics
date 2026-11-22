@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Urdu (ur), right-to-left. DRAFT: needs native review. Persian/Arabic-origin everyday words (no Sanskrit): باغ (garden), گونج (echo), میل (joining), ٹاپو (island), دالان (veranda), آنگن (courtyard). The app must support RTL layouts (android:supportsRtl="true") before this language is offered. -->
+<resources>
+    <string name="land_vowels_name">آواز کا باغ</string>
+    <string name="land_vowels_tagline">اپنی آواز سے سوئے ہوئے جانوروں کو جگاؤ</string>
+
+    <string name="land_consonants_name">گونج کا جنگل</string>
+    <string name="land_consonants_tagline">صاف آوازیں دہراؤ</string>
+
+    <string name="land_blending_name">میل کا ٹاپو</string>
+    <string name="land_blending_tagline">ایک مصمتہ اور ایک مصوتہ کو جوڑو</string>
+
+    <string name="land_script_name">لکھائی کا دالان</string>
+    <string name="land_script_tagline">سنو، چھوؤ، لکھو</string>
+
+    <string name="land_home_name">Boli &amp; Moli کا کھیل کا آنگن</string>
+    <string name="land_home_tagline">روزمرہ کے الفاظ، مسلسل دن اور اسٹیکرز</string>
+</resources>

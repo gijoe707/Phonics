@@ -160,7 +160,13 @@ Proposed, to confirm. Each world is named after a real linguistic term and built
 
 **World map**
 - `[ ]` Island map as the entry to the four worlds, with the locked path and free jumping both available
-- `[ ]` World names and terms come from the language config, so Hindi (Swara / Vyanjana / Akshara) and Telugu reuse the same map (see `task.multi-language.artifact.md`)
+- `[x]` World names and one-line descriptions per UI language are in `res/values*/strings_lands.xml` (English, Tamil, Malayalam, Telugu, Kannada, Hindi, Marathi, Bengali, Gujarati, Punjabi, Odia, Assamese, Urdu), using each language's own words: native words in the Dravidian languages, Sanskrit-rooted names (Swara / Dhwani / Akshara / Lipi) only in Hindi, Marathi, Bengali and Gujarati, each in its own spelling, and everyday words in Punjabi, Odia, Assamese and Urdu. English names: Vowel Grove, Echo Forest, Joining Island, Letter Porch, Boli & Moli's Playground. Brand name "Boli & Moli" stays in Latin script (in Tamil "போலி" means "fake")
+- `[x]` Language list registered for per-app language (`res/xml/locales_config.xml`, `android:localeConfig` in the manifest)
+- `[ ]` **Native-speaker review of every `strings_lands.xml`** (all are drafts; Odia and Assamese are lowest confidence)
+- `[ ]` Use the land strings on the home map and world screens with `stringResource(R.string.land_*)`
+- `[ ]` In-app language picker that sets the app language (`LocaleManager.applicationLocales` on Android 13+, AppCompat on older), so the choice is remembered and the land names follow it
+- `[ ]` Move the rest of the hard-coded UI text into `strings.xml` per language; only the land names are localised so far, so a language picker would still show mostly English/Tamil screens
+- `[ ]` Urdu is right-to-left: check layouts mirror correctly before offering it
 
 ### 🛡️ Parent / Teacher Area & Live Analytics Dashboard
 - `[x]` PIN protection removed for instant dashboard access (decision: no PIN and no parental gate)

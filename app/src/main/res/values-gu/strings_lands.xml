@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Gujarati (gu). DRAFT: needs native review. Sanskrit-rooted land names are used on purpose, in Gujarati script: સ્વર, ધ્વનિ, અક્ષર, લિપિ; ખીણ (valley) is native Gujarati. -->
+<resources>
+    <string name="land_vowels_name">સ્વર ખીણ</string>
+    <string name="land_vowels_tagline">તમારા અવાજથી સૂતેલા પ્રાણીઓને જગાડો</string>
+
+    <string name="land_consonants_name">ધ્વનિ વન</string>
+    <string name="land_consonants_tagline">સ્પષ્ટ અવાજો ફરી બોલો</string>
+
+    <string name="land_blending_name">અક્ષર નગરી</string>
+    <string name="land_blending_tagline">એક વ્યંજન અને એક સ્વર જોડો</string>
+
+    <string name="land_script_name">લિપિ લેબ</string>
+    <string name="land_script_tagline">સાંભળો, અડો, લખો</string>
+
+    <string name="land_home_name">Boli &amp; Moli નું રમતનું આંગણું</string>
+    <string name="land_home_tagline">રોજના શબ્દો, સતત દિવસો અને સ્ટિકર</string>
+</resources>

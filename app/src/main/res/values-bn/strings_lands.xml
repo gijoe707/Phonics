@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Bengali (bn). DRAFT: needs native review. Sanskrit-rooted land names are used on purpose, in Bengali script and grammar: স্বর, ধ্বনি, অক্ষর, লিপি; দেশ (land) is native. -->
+<resources>
+    <string name="land_vowels_name">স্বরের উপত্যকা</string>
+    <string name="land_vowels_tagline">তোমার গলার আওয়াজে ঘুমন্ত প্রাণীদের জাগাও</string>
+
+    <string name="land_consonants_name">ধ্বনির বন</string>
+    <string name="land_consonants_tagline">স্পষ্ট আওয়াজগুলো আবার বলো</string>
+
+    <string name="land_blending_name">অক্ষরের দেশ</string>
+    <string name="land_blending_tagline">একটি ব্যঞ্জন আর একটি স্বর জোড়া দাও</string>
+
+    <string name="land_script_name">লিপি ল্যাব</string>
+    <string name="land_script_tagline">শোনো, ছোঁও, লেখো</string>
+
+    <string name="land_home_name">Boli &amp; Moli-র খেলার উঠোন</string>
+    <string name="land_home_tagline">রোজকার শব্দ, টানা দিন আর স্টিকার</string>
+</resources>

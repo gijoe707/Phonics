@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Marathi (mr). DRAFT: needs native review. Sanskrit-rooted land names are used on purpose, in Marathi spelling (not copied from Hindi): स्वर, ध्वनी, अक्षर, लिपी; दरी (valley) is native Marathi. -->
+<resources>
+    <string name="land_vowels_name">स्वर दरी</string>
+    <string name="land_vowels_tagline">आपल्या आवाजाने झोपलेल्या प्राण्यांना जागे करा</string>
+
+    <string name="land_consonants_name">ध्वनी वन</string>
+    <string name="land_consonants_tagline">स्पष्ट आवाज पुन्हा म्हणा</string>
+
+    <string name="land_blending_name">अक्षर नगरी</string>
+    <string name="land_blending_tagline">एक व्यंजन आणि एक स्वर जोडा</string>
+
+    <string name="land_script_name">लिपी लॅब</string>
+    <string name="land_script_tagline">ऐका, स्पर्श करा, गिरवा</string>
+
+    <string name="land_home_name">Boli &amp; Moli चे खेळाचे अंगण</string>
+    <string name="land_home_tagline">रोजचे शब्द, सलग दिवस आणि स्टिकर्स</string>
+</resources>

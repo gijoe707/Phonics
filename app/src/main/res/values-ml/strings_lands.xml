@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Malayalam (ml). DRAFT: needs native review. Native words: തോപ്പ് (grove), മാറ്റൊലി (echo), ചേർച്ച (joining), തുരുത്ത് (islet), തിണ്ണ (veranda), കളിമുറ്റം (play courtyard). -->
+<resources>
+    <string name="land_vowels_name">ഉയിർത്തോപ്പ്</string>
+    <string name="land_vowels_tagline">നിങ്ങളുടെ ശബ്ദം കൊണ്ട് ഉറങ്ങുന്ന മൃഗങ്ങളെ ഉണർത്തൂ</string>
+
+    <string name="land_consonants_name">മാറ്റൊലിക്കാട്</string>
+    <string name="land_consonants_tagline">വ്യക്തമായ ശബ്ദങ്ങൾ ഏറ്റുപറയൂ</string>
+
+    <string name="land_blending_name">ചേർച്ചത്തുരുത്ത്</string>
+    <string name="land_blending_tagline">ഒരു വ്യഞ്ജനവും ഒരു സ്വരവും ചേർക്കൂ</string>
+
+    <string name="land_script_name">എഴുത്തുതിണ്ണ</string>
+    <string name="land_script_tagline">കേൾക്കൂ, തൊടൂ, എഴുതൂ</string>
+
+    <string name="land_home_name">Boli &amp; Moli കളിമുറ്റം</string>
+    <string name="land_home_tagline">ദിവസവും പറയുന്ന വാക്കുകൾ, തുടർച്ച, സ്റ്റിക്കറുകൾ</string>
+</resources>

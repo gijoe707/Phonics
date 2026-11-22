@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Kannada (kn). DRAFT: needs native review. Native words: ಉಸಿರು (breath), ತೋಪು (grove), ಮಾರ್ದನಿ (echo), ಕಾಡು (forest), ಕೂಡು (join), ನಡುಗಡ್ಡೆ (island), ಬರಹ (writing), ಜಗಲಿ (veranda), ಅಂಗಳ (yard). -->
+<resources>
+    <string name="land_vowels_name">ಉಸಿರ ತೋಪು</string>
+    <string name="land_vowels_tagline">ನಿಮ್ಮ ಧ್ವನಿಯಿಂದ ಮಲಗಿರುವ ಪ್ರಾಣಿಗಳನ್ನು ಎಬ್ಬಿಸಿ</string>
+
+    <string name="land_consonants_name">ಮಾರ್ದನಿ ಕಾಡು</string>
+    <string name="land_consonants_tagline">ಸ್ಪಷ್ಟ ಶಬ್ದಗಳನ್ನು ಮತ್ತೆ ಹೇಳಿ</string>
+
+    <string name="land_blending_name">ಕೂಡು ನಡುಗಡ್ಡೆ</string>
+    <string name="land_blending_tagline">ಒಂದು ವ್ಯಂಜನ ಮತ್ತು ಒಂದು ಸ್ವರವನ್ನು ಕೂಡಿಸಿ</string>
+
+    <string name="land_script_name">ಬರಹದ ಜಗಲಿ</string>
+    <string name="land_script_tagline">ಕೇಳಿ, ಮುಟ್ಟಿ, ಬರೆಯಿರಿ</string>
+
+    <string name="land_home_name">Boli &amp; Moli ಆಟದ ಅಂಗಳ</string>
+    <string name="land_home_tagline">ದಿನನಿತ್ಯದ ಪದಗಳು, ಸತತ ದಿನಗಳು, ಸ್ಟಿಕ್ಕರ್‌ಗಳು</string>
+</resources>

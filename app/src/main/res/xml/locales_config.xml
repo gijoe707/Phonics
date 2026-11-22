@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Languages the app can be switched to (Android per-app language, Android 13+ and AppCompat on older versions).
+  Each one needs its own values-xx/ resources; the BoliMoli land names exist for all of these (strings_lands.xml).
+  Add a language here only once its other screens are translated too.
+-->
+<locale-config xmlns:android="http://schemas.android.com/apk/res/android">
+    <locale android:name="en" />
+    <locale android:name="ta" />
+    <locale android:name="ml" />
+    <locale android:name="te" />
+    <locale android:name="kn" />
+    <locale android:name="hi" />
+    <locale android:name="mr" />
+    <locale android:name="bn" />
+    <locale android:name="gu" />
+    <locale android:name="pa" />
+    <locale android:name="or" />
+    <locale android:name="as" />
+    <locale android:name="ur" />
+</locale-config>

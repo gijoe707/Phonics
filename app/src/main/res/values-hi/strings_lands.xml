@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Hindi (hi). DRAFT: needs native review. Sanskrit-rooted land names are used on purpose for Hindi: स्वर (vowel), ध्वनि (sound), अक्षर (letter), लिपि (script). -->
+<resources>
+    <string name="land_vowels_name">स्वर घाटी</string>
+    <string name="land_vowels_tagline">अपनी आवाज़ से सोते जानवरों को जगाओ</string>
+
+    <string name="land_consonants_name">ध्वनि जंगल</string>
+    <string name="land_consonants_tagline">साफ़ आवाज़ें दोहराओ</string>
+
+    <string name="land_blending_name">अक्षर नगरी</string>
+    <string name="land_blending_tagline">एक व्यंजन और एक स्वर को जोड़ो</string>
+
+    <string name="land_script_name">लिपि लैब</string>
+    <string name="land_script_tagline">सुनो, छुओ, लिखो</string>
+
+    <string name="land_home_name">Boli &amp; Moli का खेल-आँगन</string>
+    <string name="land_home_tagline">रोज़ के शब्द, लगातार दिन और स्टिकर</string>
+</resources>

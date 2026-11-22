@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tamil (ta). DRAFT: needs native review. Native Tamil words: உயிர் (vowel, "life"), சோலை (grove), எதிரொலி (echo), கூடல் (joining), தீவு (island), திண்ணை (veranda). -->
+<resources>
+    <string name="land_vowels_name">உயிர்ச் சோலை</string>
+    <string name="land_vowels_tagline">உங்கள் குரலால் தூங்கும் விலங்குகளை எழுப்புங்கள்</string>
+
+    <string name="land_consonants_name">எதிரொலிக் காடு</string>
+    <string name="land_consonants_tagline">தெளிவான ஒலிகளைத் திரும்பச் சொல்லுங்கள்</string>
+
+    <string name="land_blending_name">கூடல் தீவு</string>
+    <string name="land_blending_tagline">மெய்யையும் உயிரையும் இணையுங்கள்</string>
+
+    <string name="land_script_name">எழுத்துத் திண்ணை</string>
+    <string name="land_script_tagline">கேட்டு, தொட்டு, எழுதிப் பாருங்கள்</string>
+
+    <string name="land_home_name">Boli &amp; Moli விளையாட்டுத் திடல்</string>
+    <string name="land_home_tagline">அன்றாடச் சொற்கள், தொடர் நாட்கள், ஒட்டுப்படங்கள்</string>
+</resources>
