@@ -18,7 +18,7 @@ These shape everything else. Record the answers in `architecture-tech-stack.md`.
 
 - `[ ]` **One app or many?** Option A: one app with a language picker (single listing, shared updates, larger download). Option B: one Play listing per language built from product flavors (small downloads, separate reviews and store pages, more release work). Option C: one app plus per-language asset packs.
 - `[ ]` **Which languages, in what order?** Suggested order is in section 11; confirm it.
-- `[ ]` **Brand and name:** "Phonics-ta-IN" has the Tamil code in it. Decide a language-neutral app name and whether each language gets its own display name (e.g. "Phonics Hindi"). The developer name is already decided: "OpenPaper Labs", domain `openpaperlabs.app`.
+- `[ ]` **Brand and name:** "Phonics-ta-IN" has the Tamil code in it. Decide a language-neutral app name and whether each language gets its own display name (e.g. "Phonics Hindi"). The developer name is already decided: "OpenPaper Labs", domain `openpaperlabs.app`. Proposed app name: **BoliMoli** (language-neutral; see `task.artifact.md`).
 - `[ ]` **Learning language vs interface language:** the learner may study Hindi while the app text is in English or Tamil. Decide which UI languages are supported and how helper text (meanings, instructions) is chosen.
 - `[ ]` **Delivery of language packs under the offline rule:** bundled in the app, install-time asset packs, or on-demand packs the user downloads once (user's choice). Decide the app size budget per language.
 - `[ ]` **Streak, stars and XP:** shared across languages for a child, or separate per language?
@@ -88,6 +88,7 @@ Today the Tamil assumptions live in names and code such as `TamilGrapheme`, `Tam
 - `[ ]` **Language picker** in onboarding and in the menu / settings, and a way to switch learning language per profile.
 - `[ ]` **Theme and icons:** keep one brand palette; optionally a small accent per language.
 - `[ ]` **Menu, home cards and titles** come from the language pack (native name + English).
+- `[ ]` **BoliMoli world names per language:** the four worlds (Swara Valley, Dhwani Jungle, Akshara Land, Lipi Lab) map to each language's own terms, e.g. Tamil Uyir / Mei / Uyirmei, Hindi Swara / Vyanjana / Akshara. Keep the world names in the language config so one map works for every language (see `task.artifact.md`, "BoliMoli Worlds").
 - `[ ]` **UI language independent of the learning language** (see section 1).
 
 ---

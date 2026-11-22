@@ -15,7 +15,7 @@ Nothing below is optional. The app cannot be published (or should not be) until 
 
 ### 🎨 Store identity & assets
 - `[ ]` **Launcher icon**: replace the default Android robot with a real adaptive icon (foreground, background, monochrome/themed)
-- `[ ]` **App name**: friendly store name, plus Tamil label via `values-ta/strings.xml`
+- `[ ]` **App name**: friendly store name (proposed: BoliMoli, see Settled Decisions), plus Tamil label via `values-ta/strings.xml`
 - `[ ]` **Play Store graphics**: 512x512 icon, 1024x500 feature graphic, phone screenshots (and tablet if supported)
 - `[ ]` **Store listing copy**: short and full description (Tamil and English), category (Education), contact email `support@openpaperlabs.app`
 
@@ -48,6 +48,8 @@ Nothing below is optional. The app cannot be published (or should not be) until 
 - **No crash reporting, analytics, trackers or ads.**
 - **100% offline, by user choice:** every feature must work without a network. Any online feature (cloud speech, downloadable packs, backup) is optional and only used if the user turns it on.
 - **Brand:** umbrella developer name "OpenPaper Labs" with the domain `openpaperlabs.app`, covering the Tamil learning app and the question paper generator.
+- **App brand (proposed, confirm):** the app is called **BoliMoli**, with three mascots: Boli, Moli and Kili. Learning zones are named after real linguistic terms (Swara Valley, Dhwani Jungle, Akshara Land, Lipi Lab) and sit on top of the existing screens. See "BoliMoli Worlds" below.
+- **Voice games never punish:** the speech check accepts or gently retries; the mascots never say or show "wrong".
 
 ---
 
@@ -59,6 +61,24 @@ Nothing below is optional. The app cannot be published (or should not be) until 
 - `[x]` Interactive 5-Skill Lesson Sequence (Listen, Read, Trace, Speech Match)
 - `[x]` Letter stroke order handwriting canvas (`TracingCanvas`)
 - `[x]` On-device acoustic sound matcher (`AcousticSoundMatcher`)
+
+**Speech sound check: match the child's mic sound to the Android TTS sound of each letter**
+The child's isolated sound is recorded and compared with how TTS says the same letter; word recognition stays as the automatic fallback.
+- `[x]` Record one isolated sound from the mic (`IsolatedSoundRecorder`, 16 kHz, stops on silence; the mic is released before the word recognizer starts)
+- `[x]` Render the TTS sound of every letter to a reference (`AppAudioEngine.synthesizeToFile`, `WavDecoder`, `ReferenceSoundBank`; built one at a time in the background and cached)
+- `[x]` Compare with MFCC + DTW and vocal-tract warping (`SoundFingerprint`, `AcousticSoundMatcher`). A child's voice sits higher than the TTS voice, so the child's audio is analysed with 8 frequency warps
+- `[x]` Decide by ranking against the sibling letters' TTS sounds (the target must be closest or practically tied), not by a fixed distance
+- `[x]` Leave the short/long twin out of the comparison (`SoundSiblings`: அ/ஆ, க/கா ...), because the two differ in length, not in sound quality
+- `[x]` Voicing check for vowels, so a hiss such as "sh" is not accepted as a vowel
+- `[x]` Wire into the lesson speech test (`SayLetterView`): sound check first, then the word recognizer as the fallback, with the existing "I said it" self-check
+- `[x]` Unit tests written: `WavDecoderTest`, `SoundSiblingsTest`, `AcousticSoundMatcherTest` (synthetic voices)
+- `[ ]` **Build the project and fix any compile errors** (written without a Gradle build; not compiled yet)
+- `[ ]` **Run the new unit tests** and fix anything red
+- `[ ]` **Test on a real phone with a child's voice;** read Logcat tag `SoundMatch` and tune `TIE_MARGIN`, `STAND_OUT_RATIO` and `MIN_VOICED_FRACTION`. The design was only checked on synthetic voices
+- `[ ]` Check that the Tamil TTS actually renders each single letter and each consonant; a letter with no usable TTS audio falls back to words
+- `[ ]` Tune consonants (unvoiced k, ch, t, p) separately; the voicing requirement is off for them
+- `[ ]` Known limit to decide on: a short vowel cannot be told from its long twin by sound quality. Option: add a duration cue, or accept both
+- `[ ]` Handle the case where speech recognition is unavailable on the device (the word fallback currently just waits)
 
 ### 🎙️ Read-Aloud & Progressive Assistance Engine
 - `[x]` Always-on microphone streaming (`StreamingSpeechListener`)
@@ -93,6 +113,54 @@ Nothing below is optional. The app cannot be published (or should not be) until 
 - `[ ]` Decide: does a letter finished through free jumping also unlock path nodes? (proposed: yes, so nothing is repeated)
 - `[ ]` Make the path work fully offline like the rest of the app
 - `[ ]` Clarify naming: the home screen is titled "Learning Path" today, so rename it (e.g. "Home") once the real path exists
+- `[ ]` Lay the locked path over the four BoliMoli worlds (see "BoliMoli Worlds" below); free jumping stays open
+
+### 🌍 BoliMoli Worlds (themed learning zones)
+Proposed, to confirm. Each world is named after a real linguistic term and built on screens that already exist, so it is mostly new wrappers and games, not new content. Everything works offline, has no failure state, and follows the settled decisions above.
+
+| Stage | World | Linguistic focus (Tamil term) | Kid voice activity |
+|---|---|---|---|
+| 1 | Swara Valley | Vowels (Uyir / Swara) | Say "Aaa" loudly to wake a sleeping animal |
+| 2 | Dhwani Jungle | Consonants (Mei / Vyanjana) | Repeat crisp sounds (Ka, Cha, Ta, Pa) like an echo game |
+| 3 | Akshara Land | Syllables (Uyirmei / Akshara) | Snap a vowel and a consonant together and say the syllable |
+| 4 | Lipi Lab | Script (Lipi) | Hear a sound, tap the right letter, then trace it |
+| Hub | Boli & Moli's Playground | Everyday words, streaks, rewards | Say Amma, Appa, Pani, Namaste |
+
+**Brand and mascots**
+- `[ ]` Confirm BoliMoli as the app name (store name, splash, launcher label, `values-ta` label). Decide the `applicationId` together with it, since it cannot change after publishing
+- `[ ]` **Kili (கிளி, parrot):** define role, look, voice and personality. Assumed: the echo friend who repeats sounds back. Confirm whether Kili is a third mascot or the main guide
+- `[ ]` **Boli and Moli:** choose the animals (suggested: a peacock and an elephant), names, colours and catchphrases
+- `[ ]` Draw the mascots as Compose vector art in the style of `WordIllustrations.kt` (no image assets, small APK)
+- `[ ]` Reaction set: cheer, hint, listening, sleepy; each with a reduced-motion version. No sad or failure reactions
+
+**Boli & Moli's Playground (home hub)**
+- `[ ]` Home screen with Boli and Moli showing streak, XP and daily goal (replaces the plain menu look; see "Child home screen redesign")
+- `[ ]` Everyday words practice: Amma, Appa, Pani, Namaste, using the word bank and the speech check
+- `[ ]` Outfits and stickers unlocked after a finished lesson (free, no purchases; same item as the sticker album)
+
+**Swara Valley (vowels, voice-driven)**
+- `[ ]` Live voice level (and pitch) from the mic: add a level callback to `IsolatedSoundRecorder`; pitch can reuse the autocorrelation in `SoundFingerprint.voicedFraction`
+- `[ ]` Game: say "Aaa" loudly to wake a sleeping animal (accepted by the sound check)
+- `[ ]` Game: hold a note so a character jumps or flies; keep it forgiving
+- `[ ]` Cover all 12 vowels with the existing Uyir units
+
+**Dhwani Jungle (consonants, echo game)**
+- `[ ]` Echo game: Kili says a sound, the child repeats it (sound check against the TTS reference)
+- `[ ]` Cover the 18 mei consonants; tune the unvoiced ones on a real device (see the sound check items)
+
+**Akshara Land (blending)**
+- `[ ]` Puzzle-piece screen: a consonant and a vowel snap together into a syllable
+- `[ ]` The child says the combined syllable; sound check with the twin excluded
+- `[ ]` Use `CONSONANT_FAMILIES` (mei + 12 uyirmei forms); play each part, then the blend (matches the letter-by-letter correction flow)
+
+**Lipi Lab (script and tracing)**
+- `[ ]` Hear a sound, tap the letter, then trace it (reuse `ListenAndTapView` and `TracingCanvas`)
+- `[ ]` More tracing templates: only அ, ஆ and க have stroke templates today
+- `[ ]` Offer Lipi Lab for a letter right after the child speaks its sound
+
+**World map**
+- `[ ]` Island map as the entry to the four worlds, with the locked path and free jumping both available
+- `[ ]` World names and terms come from the language config, so Hindi (Swara / Vyanjana / Akshara) and Telugu reuse the same map (see `task.multi-language.artifact.md`)
 
 ### 🛡️ Parent / Teacher Area & Live Analytics Dashboard
 - `[x]` PIN protection removed for instant dashboard access (decision: no PIN and no parental gate)
@@ -109,6 +177,7 @@ Nothing below is optional. The app cannot be published (or should not be) until 
 - `[ ]` Sticker album & non-monetary collectible rewards shop
 - `[ ]` Lesson-completion celebration (confetti / sound) outside the read-along screen
 - `[ ]` Child onboarding setup (welcome, language toggle)
+- `[ ]` First five minutes: meet Boli, Moli and Kili, Kili explains the mic just before the first recording, the child's first win is saying "Aaa", then parent setup (child name, daily goal, language)
 
 ### 🌟 Engagement & Reward Plan (from the app review, in build order)
 The goal is to add the reward layer and variety on top of the read-along core. The order below is the build order. None of this blocks the Play Store upload; the Priority section at the top still comes first. Items already built are ticked, and items that exist elsewhere in this file are linked rather than repeated.
@@ -126,7 +195,7 @@ The goal is to add the reward layer and variety on top of the read-along core. T
 - `[ ]` Show the streak, stars and daily-goal progress where the child sees them (home screen and after each lesson)
 
 **Step 4: Mascot and sound effects**
-- `[ ]` Design one friendly mascot character (name, look, voice) following the illustration style guide
+- `[ ]` Design the friendly mascots (name, look, voice) following the illustration style guide. Proposed set: Boli, Moli and Kili (see "BoliMoli Worlds")
 - `[ ]` Mascot appears on the home screen, in lessons, in read-along and on the reward screen
 - `[ ]` Mascot cheers on success and gives hints
 - `[ ]` Mascot does the "say it again" model for a missed word: it says the word, then reading resumes
@@ -310,6 +379,7 @@ From `curriculum-design.md` and the original prompt. Not yet built or only partl
 - `[ ]` Course start: vowels first, or a mixed vowel / consonant sequence
 - `[ ]` Tracing tolerance that counts as success
 - `[ ]` Any classroom or curriculum standards to follow, and the target age range
+- `[ ]` BoliMoli: confirm the app name, the role of Kili, the animals for Boli and Moli, and the `applicationId` (e.g. `app.openpaperlabs.bolimoli` instead of `app.openpaperlabs.phonics`)
 
 ### 📝 Backlog: Doc Reconciliation (stale statements found)
 - `[x]` `tamil-phonics-reader-prompt.md`: PIN gate and test-count mentions fixed, release checklist points to the priority section, offline and no-PIN decisions recorded
