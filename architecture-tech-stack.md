@@ -6,13 +6,36 @@ Build a native **Kotlin + Jetpack Compose** Android app using **MVVM at feature 
 
 This is the preferred option because speech, accessibility, text segmentation, tablet layouts, Google Play Families requirements, and low-end Android-device support are best handled by platform APIs. The app should avoid a hybrid runtime for the MVP.
 
+## Settled Decisions
+
+- **Offline:** every feature must work 100% offline. Any online feature (cloud speech, downloadable content packs, backup) is optional and used only if the user chooses it.
+- **No parent PIN and no parental gate.** The parent area opens directly.
+- **No ads, trackers, analytics or crash reporting.**
+- **Two learning modes, both valid:** a locked Duolingo-style learning path, and free jumping to any letter or activity.
+
+## Current Build vs This Proposal
+
+| Area | Proposal | Current build |
+|---|---|---|
+| Modules | `feature:*` / `core:*` Gradle modules | Single `app` module organised by packages (`core`, `feature`, `ui`) |
+| Navigation | Compose Navigation, single activity | Single activity, enum-based screen state in `TamilPhonicsApp`, drawer menu |
+| State | ViewModels, MVI for read-aloud | State held in `TamilPhonicsApp` (`remember` / `rememberSaveable`); no ViewModels yet |
+| Storage | Room + DataStore | SharedPreferences: one progress file per profile, plus one file for the profile list and device settings |
+| Profiles | Local profiles with a parent PIN | Local profiles (name + emoji avatar), no PIN by decision |
+| Content | Versioned, validated JSON | Curriculum defined in Kotlin (`CurriculumRepository`) |
+| Audio | Recorded assets first, TTS fallback, provider interface | Reference sound bank and Android TTS (`ta-IN`); no provider interface yet |
+| Speech | `SpeechRecognizer` behind a provider interface | `SpeechRecognizerEngine` / `StreamingSpeechListener` plus on-device `AcousticSoundMatcher` and the "I said it" fallback; no provider interface yet |
+| Adaptive engine | Spaced repetition with attempt records | Not built; progress stores best stars, streak, completed letters and study time |
+| Dependency injection | Yes | None |
+| Tests | JVM, Room, Compose UI, accessibility, speech samples | JVM unit tests only |
+
 ## Module Split
 
 | Module | Responsibility |
 |---|---|
 | `app` | Application setup, navigation, dependency injection, window-size configuration |
-| `feature:onboarding` | Profiles, language preferences, consent, parent PIN |
-| `feature:curriculum` | Letter, syllable, word, phrase, and story lessons |
+| `feature:onboarding` | Profiles, language preferences, microphone consent (no parent PIN, by decision) |
+| `feature:curriculum` | Letter, syllable, word, phrase, and story lessons; locked learning path and free browsing |
 | `feature:readaloud` | Recording flow, word timing, correction overlay, retry flow |
 | `feature:gamelayer` | XP, stars, streaks, hearts, rewards, learning path |
 | `feature:parent` | Dashboard, goals, reports, profile management |
@@ -34,6 +57,7 @@ This is the preferred option because speech, accessibility, text segmentation, t
 
 ## Offline-First Data
 
+- **Everything must work 100% offline.** Any online feature is optional and used only if the user chooses it. The manifest stays free of the INTERNET permission unless such a feature is added.
 - Bundle the MVP curriculum and approved audio assets with the APK or split install delivery.
 - Store curriculum JSON in versioned, validated resources.
 - Import content into Room for local progress or keep the JSON as the source and Room as runtime cache.
@@ -97,7 +121,7 @@ The segmentation fields must be produced by the tested grapheme utility, not han
 
 Accept the MVP recognizer result only after normalization, then compare it with the target using Tamil grapheme units and configurable edit/tolerance thresholds. Preserve an in-app `I said it` self-check fallback for low-confidence or no-network cases.
 
-Evaluate `Google Cloud Speech-to-Text` and a local/quantized Indic model only after a pilot dataset of child voices is available. A cloud model may improve accuracy but increases network and privacy requirements; on-device models reduce latency and data transfer but need device/storage benchmarks.
+Because the app must work 100% offline, recognition has to run on the device: the offline Tamil language pack, a local/quantized Indic model, the acoustic matcher, and the "I said it" fallback. Evaluate these after a pilot dataset of child voices is available. Cloud recognition may be offered only as an optional extra that the user turns on; it is never required.
 
 Do not expose raw recognition audio or logs unless explicitly configured and consented.
 
@@ -129,9 +153,9 @@ Room should store append-only attempt records and derived progress state. The ad
 
 ## Security and Families Safety
 
-- PIN-gate parent settings and profiles.
-- Keep cloud features opt-in and collect only progress information needed for the experience.
-- No ads, trackers, or third-party analytics in the first release.
+- No parent PIN or parental gate (decision). The parent area opens directly, and deleting a profile asks for confirmation. Keep the app free of external links, purchases and ads so this stays compatible with Families policy, and re-check the policy before adding any.
+- Keep any online feature opt-in and collect only the progress information needed for the experience (all of it stays on the device today).
+- No ads, trackers, third-party analytics or crash reporting (a standing decision, not only for the first release).
 - Prepare an account-free profile model and an explicit parent/teacher privacy notice.
 - Obtain legal and Families-policy review before any account, cloud recording, or analytics feature.
 
@@ -141,6 +165,7 @@ Room should store append-only attempt records and derived progress state. The ad
 - Instrumentation tests for Room migrations and repositories.
 - Compose UI tests for correction, navigation, and window-size behavior.
 - Speech and audio tests using recorded Tamil pilot samples.
+- Offline test pass in airplane mode for every screen and feature.
 - Accessibility checks for TalkBack, contrast, touch targets, and text scaling.
 
 ## Alternatives Considered
@@ -158,13 +183,13 @@ Room should store append-only attempt records and derived progress state. The ad
 - Tamil UI and English helper text.
 - Indian Tamil is the default audio dialect until the user chooses otherwise.
 - The MVP is free and ad-free.
-- Core lessons, assets, recognition fallback, and progress work offline.
+- Every feature works 100% offline; online extras are optional and the user's choice.
 - Multiple child profiles are local to the device.
 
 ## Open Questions
 
-1. Does “fully offline” include speech recognition, or is limited cloud recognition acceptable?
+1. Does “fully offline” include speech recognition, or is limited cloud recognition acceptable? **Answered: everything must work 100% offline; cloud is optional and opt-in.**
 2. Is Indian Tamil or Sri Lankan Tamil the expected spoken standard?
 3. Who owns and approves the native-speaker recordings and curriculum?
-4. Should profiles use a shared parent PIN or separate per-profile PINs?
+4. Should profiles use a shared parent PIN or separate per-profile PINs? **Answered: no parent PIN.**
 5. Are A/B and subscription models excluded, or only ads?

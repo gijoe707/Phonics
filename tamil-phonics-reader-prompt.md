@@ -60,7 +60,7 @@ Difficulty rises as the child completes practice. Example progression (refine as
 | 6     | Short sentences                                         |
 | 7     | Short stories with comprehension questions              |
 
-- **Unlock rule:** A level unlocks after completing a set number of exercises with a minimum accuracy (for example 80%). Make thresholds configurable.
+- **Unlock rule:** A level unlocks after completing a set number of exercises with a minimum accuracy (for example 80%). Make thresholds configurable. Unlocking applies to the locked learning path; free jumping to any letter or activity stays available too (both modes are valid).
 - **Adaptive engine:** Track mistakes per letter, syllable and word. Resurface weak items using spaced repetition. Ease off after repeated failures and step up after streaks of success.
 
 ### 2.4 Duolingo-Style Pictographic Learning
@@ -92,7 +92,7 @@ Difficulty rises as the child completes practice. Example progression (refine as
 
 - Progress dashboard: letters mastered, weak sounds, time spent, streaks
 - Set daily goals and manage profiles
-- Optional PIN gate for settings
+- No PIN gate (decided): the parent area opens directly
 - Export progress report
 
 ## 3. Technical Requirements
@@ -104,7 +104,7 @@ Difficulty rises as the child completes practice. Example progression (refine as
   - Allow a pluggable TTS provider (system, Azure, Google Cloud, Sarvam or similar), and recommend which to test.
 - **Speech recognition:** Evaluate options for Tamil child speech (Android `SpeechRecognizer`, Google Cloud Speech-to-Text, Whisper-based or Indic models). Explain accuracy trade-offs and offer a fallback "I said it" self-check mode when recognition confidence is low.
 - **Text handling:** Grapheme-aware segmentation for Tamil. Build a utility that splits a word into letters (உயிர் [Uyir - Vowels], மெய் [Mei - Consonants], உயிர்மெய் [Uyirmei - Combined Vowel-Consonants]) and syllables (அசை [Asai]) correctly. Provide unit tests with a word list.
-- **Offline-first:** Core lessons and audio must work offline. Cloud features are optional.
+- **Offline-first:** The whole app must work 100% offline. Any cloud feature is optional and used only if the user turns it on. No ads, trackers, analytics or crash reporting.
 - **Storage:** Room for progress, DataStore for settings, structured JSON or SQLite for the curriculum content.
 - **Architecture:** MVVM or MVI, a clear module split (curriculum, audio, speech, gamification, UI), dependency injection, and a testable adaptive-learning engine.
 - **Performance and safety:** Low-end device support, small installation size, no ads, no third-party trackers, minimal data collection. Follow COPPA-style and Google Play "Designed for Families" requirements.
@@ -130,9 +130,11 @@ Work in this order, and wait for my feedback after steps 1 and 2:
    - `[x]` **M1:** Letter-sound lessons for all letter groups, with tracing and listen-and-tap games
    - `[x]` **M2:** Read-aloud with word highlighting and letter-by-letter / syllable correction
    - `[x]` **M3:** Progressive difficulty levels (1-7+ letter words), continuous speech+meaning test, XP, streaks, and stars
-   - `[x]` **M4:** Pictographic exercises, expanded dictionary word bank, parent dashboard (`ParentDashboardScreen`) with PIN gate, heat map, and goal management
-6. `[x]` **Testing plan:** unit tests (73 tests passing), UI structure, and grapheme validation.
-7. `[ ]` **Release checklist** for Google Play (Families policy, privacy policy, content rating).
+   - `[x]` **M4:** Pictographic exercises, expanded dictionary word bank, parent dashboard (`ParentDashboardScreen`) with heat map and goal management (no PIN gate, by decision)
+   - `[x]` **M4b:** Multiple child profiles with a selection page at launch and per-profile progress
+   - `[ ]` **M5:** Locked Duolingo-style learning path, alongside free jumping to any letter or activity (both stay available)
+6. `[x]` **Testing plan:** unit tests, UI structure, and grapheme validation.
+7. `[ ]` **Release checklist** for Google Play (Families policy, privacy policy, content rating). The working list is the Priority section of `task.artifact.md`.
 
 ## 6. Constraints and Working Style
 
@@ -144,7 +146,7 @@ Work in this order, and wait for my feedback after steps 1 and 2:
 ## 7. Open Questions (answer or propose defaults)
 
 1. Target age range and whether the child already speaks Tamil at home
-2. Fully offline, or is cloud TTS and speech recognition acceptable?
+2. Fully offline, or is cloud TTS and speech recognition acceptable? **Answer: fully offline; cloud only if the user opts in.**
 3. Free, ad-free, or paid? Any subscription plans?
 4. Who will record or approve the audio and illustrations?
 5. Tamil dialect or accent preference for the voice (e.g. Indian Tamil vs Sri Lankan Tamil)

@@ -15,9 +15,9 @@
 ### Phone
 
 - Single-column navigation.
-- Bottom navigation: **Learn**, **Practice**, **Rewards**, **Parent**.
+- Bottom navigation: **Learn**, **Practice**, **Rewards**, **Parent**. (The current build uses a drawer menu; bottom navigation is planned.)
 - Back, close, and progress controls remain in the top app bar.
-- The parent area requires the profile PIN.
+- The parent area opens directly: no PIN and no parental gate (decision).
 
 ### Tablet
 
@@ -67,6 +67,8 @@ Default settings should remain usable if the child skips the baseline.
 
 Profiles stay local. The avatar is chosen after setup and can be changed from the profile menu.
 
+**Built:** a profile picker at launch (2+ profiles show the picker; exactly one opens directly; none shows a create prompt), emoji avatars, and create / edit / delete / switch from the Parent dashboard and the menu. The picker plays the same background music as the home page.
+
 ## Learning Path
 
 ```text
@@ -94,6 +96,15 @@ Rules:
 - Completed nodes use stars; current nodes use one clear action; locked nodes explain the prerequisite.
 - A lock icon is paired with text and audio, not icon-only.
 - Daily progress is visible without interrupting the lesson.
+
+### Two ways in: locked path and free jumping
+
+Both are valid and both stay available:
+
+- **Locked path (Duolingo-style):** the map above. Nodes unlock in order; the child follows the path one step at a time.
+- **Free jumping:** the vowel and consonant grids, quiz, stories, custom reader and "Practice" jumps open any letter or activity at any time, with no locks.
+
+Finishing a lesson in either mode records stars, streak and study time to the active profile. Locking never hides or blocks the free-jumping screens, and all of it works offline.
 
 ## Lesson Screen
 
@@ -239,14 +250,14 @@ Rewards:
 
 ```text
 +------------------------------------+
-| PIN   [cancel] [unlock]            |
+| (no PIN: opens directly)           |
 +------------------------------------+
 
 +-----------------------------------------------+
-| Aun                   [PIN] [Settings]        |
+| Aun                   [Edit] [Settings]       |
 | Today 12/15 min    Streak 4                  |
 |                                               |
-| Letters mastered 18/250    Needs practice 6   |
+| Letters mastered 18/247    Needs practice 6   |
 | [line chart]           [unit heat map]       |
 |                                               |
 | Weak items                                    |
@@ -275,9 +286,8 @@ Tablet:
 - Sound and haptics
 - High contrast and text scaling
 - Microphone mode
-- Offline audio
+- Offline mode (user choice)
 - Daily reminder time
-- PIN
 - Data export and deletion
 
 All settings should expose the same behavior in both phone and tablet layouts.
@@ -296,7 +306,22 @@ All settings should expose the same behavior in both phone and tablet layouts.
 ## Analytics and Privacy UX
 
 - The parent view explains exactly what progress is stored.
-- Cloud speech is disabled until the parent enables it.
+- The app is fully usable offline. Any online feature stays off until the user turns it on.
 - Microphone permission is requested only immediately before recording.
 - Exported reports contain the selected child's progress only.
+- No crash reporting, analytics or trackers.
 - The app provides a visible delete/reset action.
+
+## Implementation Status
+
+| Screen / flow | Status |
+|---|---|
+| Profile picker, create / edit / delete / switch | Built |
+| Parent dashboard (no PIN) with profiles card | Built |
+| Free jumping: letter grids, quiz, stories, custom reader | Built |
+| Locked learning path | Planned |
+| Onboarding (language, mic explanation, daily goal) | Not built |
+| Settings screen (incl. offline mode) | Not built |
+| Reward screen after a lesson | Not built |
+| Bottom navigation | Planned (drawer menu today) |
+| Tablet two-pane layouts | Not built |

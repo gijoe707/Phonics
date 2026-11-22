@@ -9,6 +9,19 @@
 - Expose grapheme boundaries to the learner as syllable units, not as individual Unicode code points.
 - Mark pronunciation and grouping decisions as **teacher review required** until approved.
 
+## Two Ways to Learn (both valid)
+
+| Mode | How it works |
+|---|---|
+| **Locked learning path** (Duolingo-style) | An ordered path that follows the teaching groups below. A node unlocks when the previous one is finished; the current node is highlighted; each node shows stars. |
+| **Free jumping** | Vowel and consonant grids, quiz, stories, custom reader and direct "Practice" jumps. Anything can be opened at any time. No locks. |
+
+Rules:
+
+- Free jumping is never blocked by the path. Locks apply only inside the locked path.
+- Both modes work fully offline and save to the same active profile (stars, streak, study time, completed letters).
+- Proposed, to confirm: a letter finished through free jumping also counts toward the path, so a child is never forced to repeat it.
+
 ## Initial Tamil Inventory
 
 | Type | Characters |
@@ -41,7 +54,7 @@ The order below prioritizes common, easy-to-distinguish units and usable picture
 | 15 | ன், ன | Remaining consonant | teacher-reviewed examples |
 | 16 | ஃ | Aytham | use only after all regular unit types and with specialist review |
 
-**Prerequisite rule:** Uyirmei forms do not unlock until the child demonstrates the relevant mei and vowel-sign units. Some vowel signs change the meaning and pronunciation of a consonant; native-speaker review is mandatory.
+**Prerequisite rule (applies to the locked path only; free jumping stays open):** Uyirmei forms do not unlock until the child demonstrates the relevant mei and vowel-sign units. Some vowel signs change the meaning and pronunciation of a consonant; native-speaker review is mandatory.
 
 ## Five-Skill Lesson Sequence
 
@@ -237,6 +250,20 @@ Reject content when:
 - Grantha, compound, and tricky-word coverage.
 - Dialect choice and voice direction.
 - Stroke and syllable segmentation rules.
+
+## Implementation Status
+
+| Area | Design | Current build |
+|---|---|---|
+| Lesson | 8 steps | 5 steps: precursor sound, listening test, reading test, tracing, speech test |
+| Learning order | 16 groups, locked unlocking | Free jumping built (letter grids, quiz, stories, custom reader); locked path still to build |
+| Levels | 7 levels: units, words, phrases, sentences, stories | Quiz levels 1-7+ by word length; Grade 1-3 stories; phrase and sentence levels not built |
+| Exercise mix | 8 exercise types by share | Partly built; audit against the table pending |
+| Word bank | 200-300 approved words with image and audio | Tamil dictionary repository grouped by grapheme length; count and assets to be checked |
+| Tricky words | Separate reviewed list | Not built |
+| Teacher review | Required for all units and words | Pending |
+| Content storage | Versioned, validated JSON | Defined in Kotlin |
+| Adaptive engine | Spaced repetition and ease-off rules | Not built |
 
 ## Open Questions
 
